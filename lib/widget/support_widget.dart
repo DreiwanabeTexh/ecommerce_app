@@ -26,4 +26,12 @@ class AppWidget {
     );
   }
 
+  static TextStyle normalTextStyleOrange() {
+    return TextStyle(
+          color: Color(0xFFfd6f3e), 
+          fontSize: 18, 
+          fontWeight: FontWeight.w500
+    );
+  }
+
 }

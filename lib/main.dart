@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/pages/bottomnavbar.dart';
 import 'package:ecommerce_app/pages/home.dart';
 import 'package:ecommerce_app/pages/onboarding.dart';
+import 'package:ecommerce_app/pages/productdetail.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 255, 153, 0)),
       ),
-      home: Home()
+      home: Productdetail()
     );
   }
 }
