@@ -1,8 +1,10 @@
 import 'package:ecommerce_app/pages/bottomnavbar.dart';
 import 'package:ecommerce_app/pages/home.dart';
+import 'package:ecommerce_app/pages/login.dart';
 import 'package:ecommerce_app/pages/onboarding.dart';
 import 'package:ecommerce_app/pages/productdetail.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce_app/pages/signin.dart';
 
 void main() {
   runApp(const MyApp());

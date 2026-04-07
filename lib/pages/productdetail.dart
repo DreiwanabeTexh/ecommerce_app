@@ -63,7 +63,7 @@ class _ProductdetailState extends State<Productdetail> {
                   Text("Details", style: AppWidget.normalTextBoldStyle(),),
                   SizedBox(height: 10,),
                   Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit auctor dui, sed efficitur enim efficitur in. Donec suscipit auctor dui, sed efficitur enim efficitur in.", style: TextStyle(fontSize: 18),),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 50,),
                   Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
