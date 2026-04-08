@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/pages/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widget/support_widget.dart';
 
@@ -22,7 +23,7 @@ class _loginPageState extends State<loginPage> {
               Image.asset("images/login.png"),
               SizedBox(height: 10,),
               Center(child: Text("Sign In", style: AppWidget.normalTextBoldStyle(),)),
-              SizedBox(height: 30,),
+              SizedBox(height: 15,),
               Center(child: Text("Please enter the details below to\n                  continue", style: AppWidget.normalTextFieldStyle(),)),
               SizedBox(height: 30,),
               Text("Email:", style: AppWidget.normalTextBoldStyle(),),
@@ -82,7 +83,11 @@ class _loginPageState extends State<loginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account?", style: TextStyle(color: Colors.black45, fontSize: 16, fontWeight: FontWeight.w500),),
-                  Text(" Sign Up", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.w500),)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                    },
+                    child: Text(" Sign Up", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.w500),))
                 ],
               )
             ],

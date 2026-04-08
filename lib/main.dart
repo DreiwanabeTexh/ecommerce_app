@@ -5,10 +5,14 @@ import 'package:ecommerce_app/pages/onboarding.dart';
 import 'package:ecommerce_app/pages/productdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/pages/signin.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
-}
+} 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 255, 153, 0)),
       ),
-      home: Productdetail()
+      home: SignIn()
     );
   }
 }
