@@ -20,10 +20,16 @@ class _SignInState extends State<SignIn> {
     final TextEditingController passwordController =  TextEditingController();
 
     final _formKey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
 
-    registration() async {
+    @override
+    void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
+
+      registration() async {
       if(password != null && email != null && name != null){
         try {
           UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email!, password: password!);
@@ -50,6 +56,9 @@ class _SignInState extends State<SignIn> {
         }
       }
     }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       resizeToAvoidBottomInset: true, 
@@ -86,7 +95,6 @@ class _SignInState extends State<SignIn> {
                           return null;
                         }
                       },
-        
                       controller: nameController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -156,12 +164,12 @@ class _SignInState extends State<SignIn> {
                     onTap: () {
                       if(_formKey.currentState != null && _formKey.currentState!.validate()){
                         setState(() {
-                          name = nameController.text;
-                          email = emailController.text;
-                          password = passwordController.text;
+                          name = nameController.text.trim();
+                          email = emailController.text.trim();
+                          password = passwordController.text.trim();
                         });
+                        registration();
                       }
-                      registration();
                     },
                     child: Container(
                       decoration: BoxDecoration(

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 255, 153, 0)),
       ),
-      home: SignIn()
+      home: loginPage()
     );
   }
 }
