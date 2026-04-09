@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/pages/home.dart';
 import 'package:ecommerce_app/pages/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,37 +27,41 @@ class _loginPageState extends State<loginPage> {
     super.dispose();
   }
 
-  userLogin() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: 
-        Text("Login Sucessfully", style: TextStyle(
-        color: Colors.white),), 
-        backgroundColor: Colors.green,));
-        await Future.delayed(Duration(milliseconds: 500));
-    
-    // THEN navigate - use pushReplacement to replace the login page
-      Navigator.pushReplacement(
-        context, 
-        MaterialPageRoute(builder: (context) => Bottomnavbar()),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found'){
+    userLogin() async {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
         ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: 
-        Text("User doesn't exist", style: TextStyle(
-        color: Colors.white),), 
-        backgroundColor: Colors.redAccent,));
-      } else if (e.code == 'wrong-password') {
+          SnackBar(content: 
+          Text("Login Successfully", style: TextStyle(
+          color: Colors.white),), 
+          backgroundColor: Colors.green,));
+          await Future.delayed(Duration(milliseconds: 500));
+      
+      // THEN navigate - use pushReplacement to replace the login page
+        Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(builder: (context) => Bottomnavbar()),
+        );
+      } on FirebaseAuthException catch (e) {
+        String errorMessage;
+        
+        if (e.code == 'user-not-found'){
+          errorMessage = "User doesn't exist";
+        } else if (e.code == 'wrong-password') {
+          errorMessage = "Incorrect password";
+        } else if (e.code == 'invalid-credential') {
+          errorMessage = "Invalid email or password";
+        } else {
+          errorMessage = "Error: ${e.code}";
+        }
+        
         ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: 
-        Text("Incorrect password", style: TextStyle(
-        color: Colors.white),), 
-        backgroundColor: Colors.redAccent,));
+          SnackBar(content: 
+          Text(errorMessage, style: TextStyle(
+          color: Colors.white),), 
+          backgroundColor: Colors.redAccent,));
       }
     }
-  }
 
   @override
   Widget build(BuildContext context) { 
@@ -142,8 +147,8 @@ class _loginPageState extends State<loginPage> {
                     onTap: () {
                       if(_formKey.currentState!.validate()){
                         setState(() {
-                          email = emailController.text;
-                          password = passwordController.text;
+                          email = emailController.text.trim();
+                          password = passwordController.text.trim();
                         });
                         userLogin();
                       }
