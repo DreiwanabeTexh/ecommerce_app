@@ -1,9 +1,13 @@
 import 'package:ecommerce_app/pages/bottomnavbar.dart';
 import 'package:ecommerce_app/pages/home.dart';
 import 'package:ecommerce_app/pages/login.dart';
+import 'package:ecommerce_app/services/database.dart';
+import 'package:ecommerce_app/widget/shared_preference.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widget/support_widget.dart';
+import 'package:random_string/random_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -35,10 +39,22 @@ class _SignInState extends State<SignIn> {
           UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email!, password: password!);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: 
-            Text("Registered Sucessfully!", style: 
+            Text("Registered Sucessfully, Please Login!", style: 
             TextStyle(color: Colors.white),), 
             backgroundColor: Colors.green,));
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnavbar()));
+            String uid = randomAlphaNumeric(10);
+            await SharedPreference().saveUserEmail(emailController.text.trim());
+            await SharedPreference().saveUserId(uid);
+            await SharedPreference().saveUserName(nameController.text.trim());
+            await SharedPreference().saveUserImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png");
+            Map<String, dynamic> userInfo = {
+              "name" : nameController.text.trim(),
+              "email" : emailController.text.trim(),
+              "uid" : uid,
+              "userimage":"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            };
+            await Database().addUserDetails(userInfo, uid);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => loginPage()));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
              ScaffoldMessenger.of(context).showSnackBar(
